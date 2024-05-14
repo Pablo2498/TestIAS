@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "NIEAdMIxfeSYhHc2iiQELuKoAnxajZMA6qI96EJ2+gk=",
+  "Source": "TestIASApi",
+  "BasePath": "_content/TestIASApi",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}
