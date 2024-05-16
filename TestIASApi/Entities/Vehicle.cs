@@ -13,5 +13,7 @@
         public int Price { get; set; }
 
         public Brand Brand { get; set; }
+
+        public int BrandId { get; set; }
     }
 }

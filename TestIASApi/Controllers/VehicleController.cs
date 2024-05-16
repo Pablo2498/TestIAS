@@ -15,31 +15,31 @@ namespace TestIASApi.Controllers
         }
 
         [HttpGet("get-all-vehicles/{page}/{items}")]
-        public Response GetAllVehicles([FromRoute] int page, [FromRoute] int items)
+        public async Task<Response> GetAllVehicles([FromRoute] int page, [FromRoute] int items)
         {
             return new Response
             {
-                Data = _vehicleService.GetAllVehicles(page, items),
+                Data = await _vehicleService.GetAllVehicles(page, items),
                 Message = "Ok",
                 Status = 200
             };
         }
 
         [HttpGet("get-vehicle-detail/{id}")]
-        public Response GetVehicleDetail([FromRoute] int id)
+        public async Task<Response> GetVehicleDetail([FromRoute] int id)
         {
             return new Response
             {
-                Data = _vehicleService.GetVehicleDetailById(id),
+                Data = await _vehicleService.GetVehicleDetailById(id),
                 Message = "Ok",
                 Status = 200
             };
         }
 
         [HttpPost("create-vehicle")]
-        public Response CreateVehicle(VehicleDTO vehicle)
+        public async Task<Response> CreateVehicle(VehicleDTO vehicle)
         {
-            _vehicleService.AddVehicle(vehicle);
+            await _vehicleService.AddVehicle(vehicle);
             return new Response
             {
                 Data = vehicle,

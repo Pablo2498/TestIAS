@@ -1,34 +1,34 @@
-﻿using TestIASApi.Entities;
+﻿using Microsoft.EntityFrameworkCore;
+using TestIASApi.Context;
+using TestIASApi.Entities;
 using TestIASApi.Repositories.Interfaces;
 
 namespace TestIASApi.Repositories
 {
     public class VehicleRepository : IVehicleRepository
     {
-        public List<Vehicle> Vehicles { get; set; } = new List<Vehicle>();
+        private readonly ApplicationDbContext _context;
 
-        public void AddVehicle(Vehicle vehicle)
+        public VehicleRepository(ApplicationDbContext context)
         {
-            vehicle.Id = GetNextFreeId();
-            Vehicles.Add(vehicle);
+            _context = context;
         }
 
-        public List<Vehicle> GetAllVehicles(int page, int items)
+        public async Task AddVehicle(Vehicle vehicle)
         {
-            return Vehicles.Skip((page - 1) * items).Take(items).ToList();
+            await _context.Vehicles.AddAsync(vehicle);
+            await _context.SaveChangesAsync();
         }
 
-        public Vehicle GetVehicleDetailById(int id)
+        public async Task<List<Vehicle>> GetAllVehicles(int page, int items)
         {
-            return Vehicles.Find(t => t.Id.Equals(id));
+            return await _context.Vehicles.Skip((page - 1) * items).Take(items).Include(x => x.Brand).ToListAsync();
         }
 
-        private int GetNextFreeId()
+        public async Task<Vehicle> GetVehicleDetailById(int id)
         {
-            if (Vehicles.Count == 0) 
-                return 1;
-            int maxId = Vehicles.Max(t => t.Id);
-            return maxId++;
+            return await _context.Vehicles.Include(x => x.Brand)
+                .FirstOrDefaultAsync(x => x.Id.Equals(id));
         }
     }
 }

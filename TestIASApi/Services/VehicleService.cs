@@ -14,11 +14,11 @@ namespace TestIASApi.Services
             _vehicleRepository = vehicleRepository;
         }
 
-        public void AddVehicle(VehicleDTO vehicle)
+        public async Task AddVehicle(VehicleDTO vehicle)
         {
             try
             {
-                _vehicleRepository.AddVehicle(new Vehicle
+                await _vehicleRepository.AddVehicle(new Vehicle
                 {
                     Brand = new Brand { Name = vehicle.Brand.Name },
                     Description = vehicle.Description,
@@ -33,9 +33,9 @@ namespace TestIASApi.Services
             }
         }
 
-        public List<VehicleDTO> GetAllVehicles(int page, int items)
+        public async Task<List<VehicleDTO>> GetAllVehicles(int page, int items)
         {
-            var vehicles = _vehicleRepository.GetAllVehicles(page, items);
+            var vehicles = await _vehicleRepository.GetAllVehicles(page, items);
 
             return vehicles.SelectMany(vehicle => new List<VehicleDTO>
             {
@@ -50,9 +50,9 @@ namespace TestIASApi.Services
             }).ToList();
         }
 
-        public VehicleDTO GetVehicleDetailById(int id)
+        public async Task<VehicleDTO> GetVehicleDetailById(int id)
         {
-            var vehicle = _vehicleRepository.GetVehicleDetailById(id);
+            var vehicle = await _vehicleRepository.GetVehicleDetailById(id);
 
             return new VehicleDTO
             {

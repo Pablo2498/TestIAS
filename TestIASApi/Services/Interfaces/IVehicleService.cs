@@ -4,10 +4,10 @@ namespace TestIASApi.Services.Interfaces
 {
     public interface IVehicleService
     {
-        List<VehicleDTO> GetAllVehicles(int page, int items);
+        Task<List<VehicleDTO>> GetAllVehicles(int page, int items);
 
-        VehicleDTO GetVehicleDetailById(int id);
+        Task<VehicleDTO> GetVehicleDetailById(int id);
 
-        void AddVehicle(VehicleDTO vehicle);
+        Task AddVehicle(VehicleDTO vehicle);
     }
 }

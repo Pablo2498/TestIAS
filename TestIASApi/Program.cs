@@ -1,3 +1,5 @@
+using Microsoft.EntityFrameworkCore;
+using TestIASApi.Context;
 using TestIASApi.Repositories;
 using TestIASApi.Repositories.Interfaces;
 using TestIASApi.Services;
@@ -8,8 +10,13 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 
 builder.Services.AddControllers();
-builder.Services.AddSingleton<IVehicleRepository, VehicleRepository>(); 
-builder.Services.AddSingleton<IVehicleService, VehicleService>(); 
+
+builder.Services.AddDbContext<ApplicationDbContext>(
+    options => options.UseSqlServer(builder.Configuration.GetConnectionString("Database"))
+    );
+
+builder.Services.AddTransient<IVehicleRepository, VehicleRepository>(); 
+builder.Services.AddTransient<IVehicleService, VehicleService>(); 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

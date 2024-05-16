@@ -4,10 +4,10 @@ namespace TestIASApi.Repositories.Interfaces
 {
     public interface IVehicleRepository
     {
-        List<Vehicle> GetAllVehicles(int page, int items);
+        Task<List<Vehicle>> GetAllVehicles(int page, int items);
 
-        Vehicle GetVehicleDetailById(int id);
+        Task<Vehicle> GetVehicleDetailById(int id);
 
-        void AddVehicle(Vehicle vehicle);
+        Task AddVehicle(Vehicle vehicle);
     }
 }
